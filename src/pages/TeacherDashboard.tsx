@@ -23,9 +23,11 @@ const TeacherDashboard = () => {
   ];
 
   const recentAttendance = [
-    { subject: 'Data Structures', date: '2024-01-15', present: 28, total: 32, percentage: 87.5 },
-    { subject: 'Computer Networks', date: '2024-01-14', present: 30, total: 32, percentage: 93.8 },
-    { subject: 'Database Management', date: '2024-01-13', present: 26, total: 32, percentage: 81.3 },
+    { subject: 'Data Structures', date: '2024-01-15', present: 68, total: 72, percentage: 94.4 },
+    { subject: 'Computer Networks', date: '2024-01-14', present: 65, total: 72, percentage: 90.3 },
+    { subject: 'Database Management', date: '2024-01-13', present: 59, total: 72, percentage: 81.9 },
+    { subject: 'Operating Systems', date: '2024-01-12', present: 62, total: 72, percentage: 86.1 },
+    { subject: 'Software Engineering', date: '2024-01-11', present: 58, total: 72, percentage: 80.6 },
   ];
 
   const handleTakeAttendance = () => {

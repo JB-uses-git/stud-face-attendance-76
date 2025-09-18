@@ -1,73 +1,90 @@
-# Welcome to your Lovable project
+# MarkMe - AI-Powered Smart Attendance System
 
-## Project info
+A modern, intelligent attendance management system for educational institutions built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/c7a80f5d-f935-4aee-a1c3-6539ae0ca7d2
+## Features
 
-## How can I edit this code?
+- **AI-Powered Face Detection**: Automatically detect and mark student attendance using camera
+- **Multi-Level Classification**: Support for Branch, Section, Semester, and Subject organization
+- **Role-Based Dashboards**: Separate interfaces for Students, Teachers, and Administrators
+- **Real-time Analytics**: Comprehensive attendance tracking and reporting
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c7a80f5d-f935-4aee-a1c3-6539ae0ca7d2) and start prompting.
+- Node.js (v18 or higher)
+- npm or yarn package manager
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+Clone the repository and install dependencies:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Clone the repository
+git clone https://github.com/JB-uses-git/stud-face-attendance-76.git
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Navigate to project directory
+cd stud-face-attendance-76
 
-Follow these steps:
+# Install dependencies
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/          # Reusable UI components
+├── pages/              # Main application pages
+├── types/              # TypeScript type definitions
+├── hooks/              # Custom React hooks
+├── utils/              # Utility functions
+└── styles/             # Global styles and CSS modules
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Technology Stack
 
-## What technologies are used for this project?
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **State Management**: React Context API
+- **Icons**: Lucide React
+- **Camera Access**: Web API (getUserMedia)
 
-This project is built with:
+## Usage
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### For Teachers
+1. Login with teacher credentials
+2. Select Branch, Section, Semester, and Subject
+3. Click "Start Capture" to take attendance photos
+4. Review and submit attendance records
 
-## How can I deploy this project?
+### For Students
+1. Login with student credentials
+2. View attendance statistics and records
+3. Track attendance across different subjects
 
-Simply open [Lovable](https://lovable.dev/projects/c7a80f5d-f935-4aee-a1c3-6539ae0ca7d2) and click on Share -> Publish.
+### For Administrators
+1. Access comprehensive analytics
+2. Monitor overall attendance trends
+3. Generate reports and insights
 
-## Can I connect a custom domain to my Lovable project?
+## Contributing
 
-Yes, you can!
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Commit and push your changes
+5. Submit a pull request
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is licensed under the MIT License.
