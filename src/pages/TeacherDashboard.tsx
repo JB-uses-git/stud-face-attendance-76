@@ -10,6 +10,8 @@ import AttendanceCameraModal from '@/components/AttendanceCameraModal';
 
 const TeacherDashboard = () => {
   const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
+  const [selectedSection, setSelectedSection] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [showCamera, setShowCamera] = useState(false);
 
@@ -27,8 +29,8 @@ const TeacherDashboard = () => {
   ];
 
   const handleTakeAttendance = () => {
-    if (!selectedClass || !selectedSubject) {
-      alert('Please select both class and subject first');
+    if (!selectedClass || !selectedSection || !selectedSemester || !selectedSubject) {
+      alert('Please select branch, section, semester, and subject first');
       return;
     }
     setShowCamera(true);
@@ -74,21 +76,55 @@ const TeacherDashboard = () => {
               Take Attendance
             </CardTitle>
             <CardDescription>
-              Select class and subject to start attendance capture
+              Select branch, section, semester, and subject to start attendance capture
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
-                <label className="text-sm font-medium mb-2 block">Class</label>
+                <label className="text-sm font-medium mb-2 block">Branch</label>
                 <Select value={selectedClass} onValueChange={setSelectedClass}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select class" />
+                    <SelectValue placeholder="Select branch" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="CS-3A">CS-3A</SelectItem>
-                    <SelectItem value="CS-3B">CS-3B</SelectItem>
-                    <SelectItem value="CS-3C">CS-3C</SelectItem>
+                    <SelectItem value="CSE">CSE</SelectItem>
+                    <SelectItem value="AIML">AIML</SelectItem>
+                    <SelectItem value="DS">DS</SelectItem>
+                    <SelectItem value="CYSE">CYSE</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">Section</label>
+                <Select value={selectedSection} onValueChange={setSelectedSection}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select section" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="A">A</SelectItem>
+                    <SelectItem value="B">B</SelectItem>
+                    <SelectItem value="C">C</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">Semester</label>
+                <Select value={selectedSemester} onValueChange={setSelectedSemester}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select semester" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="I">I</SelectItem>
+                    <SelectItem value="II">II</SelectItem>
+                    <SelectItem value="III">III</SelectItem>
+                    <SelectItem value="IV">IV</SelectItem>
+                    <SelectItem value="V">V</SelectItem>
+                    <SelectItem value="VI">VI</SelectItem>
+                    <SelectItem value="VII">VII</SelectItem>
+                    <SelectItem value="VIII">VIII</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -113,7 +149,7 @@ const TeacherDashboard = () => {
                 <Button 
                   onClick={handleTakeAttendance}
                   className="w-full"
-                  disabled={!selectedClass || !selectedSubject}
+                  disabled={!selectedClass || !selectedSemester || !selectedSection || !selectedSubject}
                 >
                   <Camera className="w-4 h-4 mr-2" />
                   Start Capture

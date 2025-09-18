@@ -179,13 +179,13 @@ const AttendanceCameraModal: React.FC<AttendanceCameraModalProps> = ({
       
       // Simulate AI face detection and recognition
       setTimeout(() => {
-        const randomDetectedStudents = mockStudents
-          .sort(() => Math.random() - 0.5)
-          .slice(0, Math.floor(Math.random() * mockStudents.length) + 1);
+        // Always select "Jalad Bhairao" as the detected student
+        const jaladStudent = mockStudents.find(student => student.name === 'Jalad Bhairao');
+        const randomDetectedStudents = jaladStudent ? [jaladStudent] : [];
         
         setDetectedStudents(randomDetectedStudents);
         
-        // Mark detected students as present
+        // Mark detected students as present, rest as absent
         const initialAttendance: Record<string, 'present' | 'absent'> = {};
         mockStudents.forEach(student => {
           initialAttendance[student.id] = randomDetectedStudents.some(d => d.id === student.id) 
@@ -197,7 +197,7 @@ const AttendanceCameraModal: React.FC<AttendanceCameraModalProps> = ({
         setIsCapturing(false);
         toast({
           title: "Face Detection Complete",
-          description: `Detected ${randomDetectedStudents.length} students in the photo`,
+          description: `Detected ${randomDetectedStudents.length} student in the photo`,
         });
       }, 2000);
     }
