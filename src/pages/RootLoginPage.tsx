@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap, Users, Shield, Eye, EyeOff } from 'lucide-react';
 
-const LoginPage = () => {
-  const { user, login, loading } = useAuth();
+const RootLoginPage = () => {
+  const { login, loading } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -34,30 +35,32 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    // Force clear all fields when role changes - no prefilled values
+    // No prefilled values - user must enter credentials manually
     setEmail('');
     setPassword('');
     setShowPassword(false);
   }, [selectedRole]);
 
-  // Redirect based on user role
-  if (user) {
-    switch (user.role) {
-      case 'teacher':
-        return <Navigate to="/teacher" replace />;
-      case 'student':
-        return <Navigate to="/student" replace />;
-      case 'admin':
-        return <Navigate to="/admin" replace />;
-      default:
-        return <Navigate to="/login" replace />;
-    }
-  }
+  // No automatic redirect - always show login page
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login(email, password);
+      // Navigate based on selected role after successful login
+      switch (selectedRole) {
+        case 'teacher':
+          navigate('/teacher');
+          break;
+        case 'student':
+          navigate('/student');
+          break;
+        case 'admin':
+          navigate('/admin');
+          break;
+        default:
+          navigate('/login');
+      }
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -118,12 +121,13 @@ const LoginPage = () => {
                   placeholder="Enter your email"
                   autoComplete="off"
                   required
+                  className="mt-1"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="password">Password</Label>
-                <div className="relative">
+                <div className="relative mt-1">
                   <Input
                     key={`password-${selectedRole}`}
                     id="password"
@@ -133,12 +137,13 @@ const LoginPage = () => {
                     placeholder="Enter your password"
                     autoComplete="off"
                     required
+                    className="pr-10"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -169,4 +174,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RootLoginPage;

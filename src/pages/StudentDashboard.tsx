@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, BookOpen, AlertTriangle, TrendingUp } from 'lucide-react';
 import { generateMockAttendance, mockClasses, mockStudents } from '@/types/attendance';
+import { MidDayMealModal } from '@/components/MidDayMealModal';
 
 const StudentDashboard = () => {
+  // State for the Mid Day Meal modal
+  const [isMealModalOpen, setIsMealModalOpen] = useState(false);
+
   // Generate mock attendance data for the current student
   const studentAttendance = generateMockAttendance().filter(record => record.studentId === '2'); // Alex Kumar
   
@@ -42,10 +47,10 @@ const StudentDashboard = () => {
   ];
 
   const recentActivity = [
-    { date: '2024-01-15', subject: 'Data Structures', status: 'present', time: '09:00 AM' },
-    { date: '2024-01-14', subject: 'Computer Networks', status: 'present', time: '11:00 AM' },
-    { date: '2024-01-13', subject: 'Database Management', status: 'absent', time: '02:00 PM' },
-    { date: '2024-01-12', subject: 'Operating Systems', status: 'present', time: '10:00 AM' },
+    { date: '2025-01-15', subject: 'Data Structures', status: 'present', time: '09:00 AM' },
+    { date: '2025-01-14', subject: 'Computer Networks', status: 'present', time: '11:00 AM' },
+    { date: '2025-01-13', subject: 'Database Management', status: 'absent', time: '02:00 PM' },
+    { date: '2025-01-12', subject: 'Operating Systems', status: 'present', time: '10:00 AM' },
   ];
 
   const getPercentageColor = (percentage: number) => {
@@ -66,42 +71,76 @@ const StudentDashboard = () => {
       subtitle="Track your attendance and academic progress"
     >
       <div className="space-y-6">
-        {/* Overall Attendance */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
-              Overall Attendance
-            </CardTitle>
-            <CardDescription>
-              Your attendance summary across all subjects
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-bold">{overallPercentage}%</p>
-                  <p className="text-sm text-muted-foreground">
-                    {overallStats.attendedClasses} out of {overallStats.totalClasses} classes attended
+        {/* Overall Attendance and Mid Day Meal */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Overall Attendance - Takes 2 columns */}
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5" />
+                Overall Attendance
+              </CardTitle>
+              <CardDescription>
+                Your attendance summary across all subjects
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-2xl font-bold">{overallPercentage}%</p>
+                    <p className="text-sm text-muted-foreground">
+                      {overallStats.attendedClasses} out of {overallStats.totalClasses} classes attended
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <Badge className={getPercentageBadgeColor(overallPercentage)}>
+                      {overallPercentage >= 85 ? 'Excellent' : overallPercentage >= 75 ? 'Good' : 'Needs Improvement'}
+                    </Badge>
+                    {overallPercentage < 75 && (
+                      <div className="flex items-center mt-2 text-sm text-red-600">
+                        <AlertTriangle className="w-4 h-4 mr-1" />
+                        Below 75% requirement
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <Progress value={overallPercentage} className="h-3" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Mid Day Meal - Takes 1 column */}
+          <Card className="lg:col-span-1">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CalendarDays className="w-5 h-5" />
+                Mid Day Meal
+              </CardTitle>
+              <CardDescription>
+                Daily meal status and preferences
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="text-center">
+                  <p className="text-lg font-semibold text-green-600 mb-1">Today's Status</p>
+                  <Badge className="bg-green-100 text-green-800 mb-3">Available</Badge>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Meal time: 12:30 PM - 1:30 PM
                   </p>
                 </div>
-                <div className="text-right">
-                  <Badge className={getPercentageBadgeColor(overallPercentage)}>
-                    {overallPercentage >= 85 ? 'Excellent' : overallPercentage >= 75 ? 'Good' : 'Needs Improvement'}
-                  </Badge>
-                  {overallPercentage < 75 && (
-                    <div className="flex items-center mt-2 text-sm text-red-600">
-                      <AlertTriangle className="w-4 h-4 mr-1" />
-                      Below 75% requirement
-                    </div>
-                  )}
-                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
+                  size="lg"
+                  onClick={() => setIsMealModalOpen(true)}
+                >
+                  View Meal Details
+                </Button>
               </div>
-              <Progress value={overallPercentage} className="h-3" />
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Subject-wise Attendance */}
         <Card>
@@ -197,6 +236,12 @@ const StudentDashboard = () => {
           </Card>
         </div>
       </div>
+
+      {/* Mid Day Meal Modal */}
+      <MidDayMealModal 
+        open={isMealModalOpen} 
+        onOpenChange={setIsMealModalOpen} 
+      />
     </DashboardLayout>
   );
 };

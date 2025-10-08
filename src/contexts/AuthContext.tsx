@@ -33,13 +33,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Find user in mock data
       const foundUser = mockUsers.find(u => u.email === email);
       
-      if (foundUser && password === 'demo123') {
-        setUser(foundUser);
-        localStorage.setItem('attendanceUser', JSON.stringify(foundUser));
-        toast({
-          title: "Login successful!",
-          description: `Welcome back, ${foundUser.name}`,
-        });
+      if (foundUser) {
+        let expectedPassword = '';
+        switch (foundUser.role) {
+          case 'teacher':
+            expectedPassword = 'teacher@markme';
+            break;
+          case 'student':
+            expectedPassword = 'student@markme';
+            break;
+          case 'admin':
+            expectedPassword = 'admin@markme';
+            break;
+        }
+        
+        if (password === expectedPassword) {
+          setUser(foundUser);
+          localStorage.setItem('attendanceUser', JSON.stringify(foundUser));
+          toast({
+            title: "Login successful!",
+            description: `Welcome back, ${foundUser.name}`,
+          });
+        } else {
+          throw new Error('Invalid credentials');
+        }
       } else {
         throw new Error('Invalid credentials');
       }
