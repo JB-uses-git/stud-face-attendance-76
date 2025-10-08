@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Camera, Users, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Camera, Users, CheckCircle, Clock, AlertCircle, Info } from 'lucide-react';
 import { mockClasses, mockStudents } from '@/types/attendance';
 import AttendanceCameraModal from '@/components/AttendanceCameraModal';
 
@@ -14,6 +15,7 @@ const TeacherDashboard = () => {
   const [selectedSection, setSelectedSection] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [showCamera, setShowCamera] = useState(false);
+  const [showMealInfoModal, setShowMealInfoModal] = useState(false);
 
   const todaysClasses = [
     { time: '09:00 AM', subject: 'Data Structures', class: 'CS-3A', status: 'completed' },
@@ -222,6 +224,183 @@ const TeacherDashboard = () => {
         </Card>
       </div>
 
+      {/* Mid Day Meal Information Section */}
+      <div className="space-y-6 mt-8">
+        {/* Combined Mid Day Meal Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                Mid Day Meal Information
+              </span>
+              <Button 
+                onClick={() => setShowMealInfoModal(true)}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <Info className="w-4 h-4" />
+                View Program Details
+              </Button>
+            </CardTitle>
+            <CardDescription>
+              Student enrollment, meal service statistics, and analytics
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-8">
+            {/* Basic Student Information */}
+            <div>
+              <h3 className="text-lg font-semibold text-slate-700 mb-4">Student Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="p-4 bg-blue-50 border-l-4 border-l-blue-500">
+                  <h4 className="font-semibold text-blue-600 mb-2">Total Enrolled Students</h4>
+                  <div className="text-2xl font-bold text-slate-800">1,250</div>
+                </Card>
+                <Card className="p-4 bg-green-50 border-l-4 border-l-green-500">
+                  <h4 className="font-semibold text-green-600 mb-2">Students Present Today</h4>
+                  <div className="text-3xl font-bold text-green-600">1,050</div>
+                </Card>
+                <Card className="p-4 bg-blue-50 border-l-4 border-l-blue-500">
+                  <h4 className="font-semibold text-blue-600 mb-2">Average Daily Attendance</h4>
+                  <div className="text-2xl font-bold text-slate-800">92%</div>
+                </Card>
+                <Card className="p-4 bg-blue-50 border-l-4 border-l-blue-500">
+                  <h4 className="font-semibold text-blue-600 mb-2">Meals Served Today</h4>
+                  <div className="text-2xl font-bold text-slate-800">1,020</div>
+                </Card>
+              </div>
+            </div>
+
+            {/* Student Analytics */}
+            <div>
+              <h3 className="text-lg font-semibold text-slate-700 mb-4">Analytics</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Attendance Trends */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-xl shadow-sm border border-blue-100">
+                  <h4 className="text-lg font-semibold text-slate-800 mb-6 flex items-center">
+                    <span className="w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mr-3"></span>
+                    Attendance Trends (Last 7 Days)
+                  </h4>
+                  <div className="relative">
+                    {/* Background Grid */}
+                    <div className="absolute inset-0 bg-white/30 rounded-lg"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-50/50 to-transparent rounded-lg"></div>
+                    
+                    <div className="flex justify-around items-end h-56 bg-white/50 p-6 rounded-lg backdrop-blur-sm relative overflow-hidden">
+                      {/* Grid Lines */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        <div className="absolute bottom-6 left-0 right-0 h-px bg-gray-200"></div>
+                        <div className="absolute bottom-20 left-0 right-0 h-px bg-gray-100"></div>
+                        <div className="absolute bottom-32 left-0 right-0 h-px bg-gray-100"></div>
+                        <div className="absolute bottom-44 left-0 right-0 h-px bg-gray-100"></div>
+                      </div>
+                      
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-blue-600 to-blue-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-blue-700 hover:to-blue-500" style={{height: '136px'}}>
+                          <span className="font-semibold">850</span>
+                        </div>
+                        <span className="text-sm mt-2 text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Mon</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-blue-600 to-blue-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-blue-700 hover:to-blue-500" style={{height: '152px'}}>
+                          <span className="font-semibold">950</span>
+                        </div>
+                        <span className="text-sm mt-2 text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Tue</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-blue-600 to-blue-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-blue-700 hover:to-blue-500" style={{height: '144px'}}>
+                          <span className="font-semibold">900</span>
+                        </div>
+                        <span className="text-sm mt-2 text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Wed</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-blue-600 to-blue-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-blue-700 hover:to-blue-500" style={{height: '160px'}}>
+                          <span className="font-semibold">1,000</span>
+                        </div>
+                        <span className="text-sm mt-2 text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Thu</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-blue-600 to-blue-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-blue-700 hover:to-blue-500" style={{height: '147px'}}>
+                          <span className="font-semibold">920</span>
+                        </div>
+                        <span className="text-sm mt-2 text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Fri</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-blue-600 to-blue-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-blue-700 hover:to-blue-500" style={{height: '155px'}}>
+                          <span className="font-semibold">970</span>
+                        </div>
+                        <span className="text-sm mt-2 text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Sat</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer transition-transform hover:scale-105">
+                        <div className="bg-gradient-to-t from-red-500 to-red-400 text-white text-xs p-2 rounded-t-lg flex items-end justify-center w-14 shadow-lg transition-all hover:shadow-xl hover:from-red-600 hover:to-red-500" style={{height: '32px'}}>
+                          <span className="font-semibold">0</span>
+                        </div>
+                        <span className="text-sm mt-2 text-red-600 font-medium group-hover:text-red-700 transition-colors">Sun</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Grade-Wise Enrollment Table */}
+                <div>
+                  <h4 className="text-md font-medium text-slate-600 mb-4">Grade-Wise Enrollment</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                      <thead>
+                        <tr className="bg-slate-100">
+                          <th className="text-left p-3 font-semibold text-slate-700">Grade</th>
+                          <th className="text-left p-3 font-semibold text-slate-700">Enrolled</th>
+                          <th className="text-left p-3 font-semibold text-slate-700">Present Today</th>
+                          <th className="text-left p-3 font-semibold text-slate-700">Attendance %</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-slate-200">
+                          <td className="p-3 text-slate-700">1st</td>
+                          <td className="p-3 text-slate-700">220</td>
+                          <td className="p-3 text-slate-700">195</td>
+                          <td className="p-3 text-slate-700">89%</td>
+                        </tr>
+                        <tr className="border-b border-slate-200">
+                          <td className="p-3 text-slate-700">2nd</td>
+                          <td className="p-3 text-slate-700">210</td>
+                          <td className="p-3 text-slate-700">185</td>
+                          <td className="p-3 text-slate-700">88%</td>
+                        </tr>
+                        <tr className="border-b border-slate-200">
+                          <td className="p-3 text-slate-700">3rd</td>
+                          <td className="p-3 text-slate-700">200</td>
+                          <td className="p-3 text-slate-700">180</td>
+                          <td className="p-3 text-slate-700">90%</td>
+                        </tr>
+                        <tr className="border-b border-slate-200">
+                          <td className="p-3 text-slate-700">4th</td>
+                          <td className="p-3 text-slate-700">190</td>
+                          <td className="p-3 text-slate-700">170</td>
+                          <td className="p-3 text-slate-700">89%</td>
+                        </tr>
+                        <tr className="border-b border-slate-200">
+                          <td className="p-3 text-slate-700">5th</td>
+                          <td className="p-3 text-slate-700">180</td>
+                          <td className="p-3 text-slate-700">165</td>
+                          <td className="p-3 text-slate-700">92%</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-slate-700">6th-8th</td>
+                          <td className="p-3 text-slate-700">250</td>
+                          <td className="p-3 text-slate-700">225</td>
+                          <td className="p-3 text-slate-700">90%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Camera Modal */}
       {showCamera && (
         <AttendanceCameraModal
@@ -231,6 +410,60 @@ const TeacherDashboard = () => {
           selectedSubject={selectedSubject}
         />
       )}
+
+      {/* Mid Day Meal Program Details Modal */}
+      <Dialog open={showMealInfoModal} onOpenChange={setShowMealInfoModal}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center text-slate-700">
+              Mid-Day Meal Program Details
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-8">
+            {/* Program Overview */}
+            <div className="section">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Program Overview</h2>
+              <p className="text-slate-600 leading-relaxed">
+                The Mid-Day Meal Program is a flagship initiative by the Government of India aimed at enhancing school attendance, improving nutritional levels, and promoting social equity among children from primary and upper primary classes. Launched in 1995, it provides free lunches to over 100 million students daily across government and government-aided schools. The program not only combats malnutrition but also fosters classroom participation and reduces dropout rates, especially among underprivileged communities.
+              </p>
+            </div>
+
+            {/* Key Insights */}
+            <div className="section">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Key Insights</h2>
+              <Card className="p-6 bg-slate-50">
+                <ul className="space-y-3 text-slate-700">
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">•</span>
+                    <div>
+                      <strong>Nutritional Impact:</strong> 85% of students report improved energy levels post-meal, based on monthly surveys.
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-green-600 mr-2">•</span>
+                    <div>
+                      <strong>Gender Parity:</strong> Female attendance stands at 93%, slightly higher than male at 91%, promoting gender equity.
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-yellow-600 mr-2">•</span>
+                    <div>
+                      <strong>Cost Efficiency:</strong> Average cost per meal: ₹5.50, serving nutritious rice, dal, vegetables, and fruits.
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-red-600 mr-2">•</span>
+                    <div>
+                      <strong>Challenges:</strong> Occasional supply delays; resolved with local vendor partnerships, reducing downtime by 40% this quarter.
+                    </div>
+                  </li>
+                </ul>
+              </Card>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 };
