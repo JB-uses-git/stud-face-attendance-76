@@ -179,9 +179,9 @@ const AttendanceCameraModal: React.FC<AttendanceCameraModalProps> = ({
       
       // Simulate AI face detection and recognition
       setTimeout(() => {
-        // Always select "Jalad Bhairao" as the detected student
-        const jaladStudent = mockStudents.find(student => student.name === 'Jalad Bhairao');
-        const randomDetectedStudents = jaladStudent ? [jaladStudent] : [];
+        // Always select "Tanvi Bhoyar" as the detected student
+        const tanviStudent = mockStudents.find(student => student.name === 'Tanvi Bhoyar');
+        const randomDetectedStudents = tanviStudent ? [tanviStudent] : [];
         
         setDetectedStudents(randomDetectedStudents);
         

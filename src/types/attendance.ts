@@ -42,7 +42,7 @@ export interface AttendanceStats {
 
 // Mock data for demonstration
 export const mockStudents: Student[] = [
-  { id: '1', rollNumber: 'CS2021001', name: 'Jalad Bhairao', email: 'jalad@college.edu', course: 'B.Tech CS' },
+  { id: '1', rollNumber: 'CS2021001', name: 'Tanvi Bhoyar', email: 'tanvi@college.edu', course: 'B.Tech CS' },
   { id: '2', rollNumber: 'CS2021002', name: 'Aarav Sharma', email: 'aarav@college.edu', course: 'B.Tech CS' },
   { id: '3', rollNumber: 'CS2021003', name: 'Vivaan Gupta', email: 'vivaan@college.edu', course: 'B.Tech CS' },
   { id: '4', rollNumber: 'CS2021004', name: 'Aditya Singh', email: 'aditya@college.edu', course: 'B.Tech CS' },
